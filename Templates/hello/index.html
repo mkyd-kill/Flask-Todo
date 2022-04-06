@@ -1,0 +1,43 @@
+{% extends 'hello/base.html' %} {% block head %}
+
+<title>Home</title>
+
+{% endblock %} {% block body %}
+<div class="container" id="main">
+    <div class="content">
+        <h1 class="header">Task Master</h1>
+
+        <div class="content-main">
+            <form action="/" method="POST" class="form">
+                <input class="input" type="text" name="content" id="content" placeholder="Write you task here...">
+                <input class="btn-sub" type="submit" value="Add Task">
+            </form>
+
+            {% if tasks|length
+            < 1 %} <h3 class="alert">There are no tasks. Create one...</h3>
+                {% else %}
+                <table class="main">
+                    <tr class="headers">
+                        <th>Task</th>
+                        <th>Added</th>
+                        <th>Actions</th>
+                    </tr>
+
+                    {% for task in tasks %}
+                    <tr class="tasks">
+                        <td>{{ task.content.title() }}</td>
+                        <td>{{ task.date_created.date() }}</td>
+                        <td class="links">
+                            <a href="/delete/{{ task.id }}">Delete</a>
+                            <br>
+                            <a href="/update/{{ task.id }}">Update</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+                {% endif %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}
